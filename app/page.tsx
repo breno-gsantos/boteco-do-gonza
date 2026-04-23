@@ -1,0 +1,33 @@
+import { About } from "@/components/about";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { Hero } from "@/components/hero";
+import { Location } from "@/components/location";
+import { MenuPreview } from "@/components/menu-preview";
+import { Reservation } from "@/components/reservation";
+import prisma from "@/lib/db";
+
+export default async function Home() {
+  const categories = await prisma.category.findMany({
+    where: { isActive: true },
+    include: {
+      items: {
+        where: { isAvailable: true },
+        orderBy: { order: 'asc' }
+      }
+    },
+    orderBy: { order: 'asc' }
+  });
+
+  return (
+    <main className="min-h-screen">
+      <Header />
+      <Hero />
+      <About />
+      <MenuPreview categories={categories} />
+      <Reservation />
+      <Location />
+      <Footer />
+    </main>
+  );
+}
