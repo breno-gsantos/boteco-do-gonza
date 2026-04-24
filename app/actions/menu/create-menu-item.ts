@@ -22,7 +22,7 @@ export async function createMenuItem(values: unknown) {
   try {
     const validated = schema.safeParse(values);
 
-    if (!validated.success) return { success: false, message: 'Dados Inválidos' }
+    if (!validated.success) return { success: false, message: 'Dados Inválidos' };
     
     await prisma.menuItem.create({
       data: validated.data

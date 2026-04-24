@@ -20,8 +20,6 @@ const createReservationSchema = z.object({
 export type CreateReservationInput = z.infer<typeof createReservationSchema>
 
 export async function createReservation(data: CreateReservationInput) {
-  await protectAction();
-
   try {
     const validated = createReservationSchema.safeParse(data)
     if (!validated.success) {

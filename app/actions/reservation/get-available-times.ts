@@ -15,8 +15,6 @@ const OPENING_HOURS: Record<number, string[]> = {
 }
 
 export async function getAvailableTimes(selectedDate: string) {
-  await protectAction();
-
   const date = new Date(selectedDate + 'T00:00:00-03:00');
   const dayOfWeek = date.getDay()
 

@@ -26,7 +26,7 @@ export function Sidebar({ children }: SidebarProps) {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const pathname = usePathname();
 
-    return(
+    return (
         <div className="min-h-screen bg-background">
             {sidebarOpen && (
                 <div className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden" />
@@ -66,15 +66,13 @@ export function Sidebar({ children }: SidebarProps) {
                     {/* User Section */}
                     <div className="p-4 border-t border-border">
                         <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary/50">
-                            <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center">
-                                <UserButton
-                                    appearance={{
-                                        elements: {
-                                            avatarBox: 'size-10'
-                                        }
-                                    }}
-                                />
-                            </div>
+                            <UserButton
+                                appearance={{
+                                    elements: {
+                                        avatarBox: "h-10 w-10"
+                                    }
+                                }}
+                            />
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium text-foreground truncate">
                                     {user?.fullName || 'Usuário'}
@@ -111,5 +109,5 @@ export function Sidebar({ children }: SidebarProps) {
                 </main>
             </div>
         </div>
-    )
+    );
 }

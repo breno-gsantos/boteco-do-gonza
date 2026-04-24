@@ -12,6 +12,7 @@ const schema = z.object({
   price: z.coerce.number().positive(),
   categoryId: z.string(),
   isFeatured: z.boolean().optional(),
+  imageUrl: z.string().optional(),
 })
 
 export async function updateMenuItem(values: unknown) {

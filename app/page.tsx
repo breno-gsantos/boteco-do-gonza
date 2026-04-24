@@ -1,5 +1,6 @@
 import { About } from "@/components/about";
 import { Footer } from "@/components/footer";
+import { Gallery } from "@/components/gallery";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Location } from "@/components/location";
@@ -25,6 +26,7 @@ export default async function Home() {
       <Hero />
       <About />
       <MenuPreview categories={categories} />
+      <Gallery />
       <Reservation />
       <Location />
       <Footer />

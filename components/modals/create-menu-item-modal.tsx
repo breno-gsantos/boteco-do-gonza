@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { createMenuItem } from "@/app/actions/menu/create-menu-item";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
+import { uploadMenuImage } from "@/app/actions/menu/upload-image";
 
 interface Category{
   id: string;
@@ -33,6 +34,7 @@ type FormData = z.infer<typeof schema>;
 
 export function CreateMenuItemModal({ categories }: Props) {
   const [open, setOpen] = useState<boolean>(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const form = useForm<z.input<typeof schema>, any, z.output<typeof schema>>({
     resolver: zodResolver(schema),
@@ -47,18 +49,36 @@ export function CreateMenuItemModal({ categories }: Props) {
   const {control, handleSubmit, formState} = form
 
   async function onSubmit(values: FormData) {
-    const result = await createMenuItem({
-      ...values,
-      price: Math.round(values.price * 100)
-      });
+    try {
+      let imageUrl: string | undefined = undefined;
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        imageUrl = await uploadMenuImage(formData);
+      }
+
+      const result = await createMenuItem({
+        ...values,
+        price: Math.round(values.price * 100),
+        imageUrl
+      })
 
       if (result.success) {
         toast.success(result.message)
         form.reset()
+        setImageFile(null)
         setOpen(false);
       } else {
         toast.error(result.message)
       }
+
+
+    } catch (error) {
+      console.error(error)
+      toast.error('Erro ao criar item')
+    }
   }
 
   return (
@@ -123,6 +143,13 @@ export function CreateMenuItemModal({ categories }: Props) {
                 <FormMessage />
               </FormItem>
             )} />
+
+            <FormItem>
+              <FormLabel>Imagem</FormLabel>
+              <FormControl>
+                <Input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] ?? null)} disabled={formState.isSubmitting} />
+              </FormControl>
+            </FormItem>
 
             <Button disabled={formState.isSubmitting} className="w-full">
               {formState.isSubmitting ? 'Criando...' : 'Criar Item'}
