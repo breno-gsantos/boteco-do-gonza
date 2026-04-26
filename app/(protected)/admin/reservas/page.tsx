@@ -7,7 +7,7 @@ import Link from "next/link"
 
 export const dynamic = 'force-dynamic'
 
-async function getReservations() {
+export async function getReservations() {
     const reservations = await prisma.reservation.findMany({
         orderBy: [
             { date: 'desc' },

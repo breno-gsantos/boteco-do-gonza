@@ -80,6 +80,31 @@ enum ReservationStatus {
   NO_SHOW
 }
 
+model OperatingHour {
+  id        String   @id @default(cuid())
+  dayOfWeek Int      // 0 = Domingo, 6 = Sábado
+  time      String   // "19:00"
+  isActive  Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([dayOfWeek, time])
+  @@map("operating_hours")
+}
+
+model BlockedSlot {
+  id        String   @id @default(cuid())
+  date      DateTime // data específica (yyyy-mm-dd)
+  time      String   // "19:30"
+  reason    String?  // opcional: "Feriado", "Evento", etc.
+
+  createdAt DateTime @default(now())
+
+  @@unique([date, time])
+  @@map("blocked_slots")
+}
+
 enum Role {
   ADMIN
   STAFF

@@ -17,7 +17,7 @@ const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Reservas", href: "/admin/reservas", icon: CalendarDays },
   { name: "Cardápio", href: "/admin/cardapio", icon: UtensilsCrossed },
-  { name: "Clientes", href: "/admin/clientes", icon: Users },
+  { name: "Horários", href: "/admin/horarios", icon: Users },
   { name: "Configurações", href: "/admin/configuracoes", icon: Settings },
 ]
 
