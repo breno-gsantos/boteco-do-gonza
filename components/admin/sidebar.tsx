@@ -6,8 +6,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react"
 import { Button } from "../ui/button";
-import { CalendarDays, ChevronRight, LayoutDashboard, LogOut, Menu, Users, UtensilsCrossed, X } from "lucide-react";
+import { CalendarDays, ChevronRight, Clock, LayoutDashboard, LogOut, Menu, UtensilsCrossed, X } from "lucide-react";
 import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
+import dynamic from "next/dynamic";
 
 interface SidebarProps{
     children: React.ReactNode
@@ -17,13 +18,18 @@ const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Reservas", href: "/admin/reservas", icon: CalendarDays },
   { name: "Cardápio", href: "/admin/cardapio", icon: UtensilsCrossed },
-  { name: "Horários", href: "/admin/horarios", icon: Users },
+  { name: "Horários", href: "/admin/horarios", icon: Clock },
 ]
 
 export function Sidebar({ children }: SidebarProps) {
     const { user } = useUser();
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const pathname = usePathname();
+
+    const UserButton = dynamic(
+        () => import("@clerk/nextjs").then((mod) => mod.UserButton),
+        { ssr: false }
+    )
 
     return (
         <div className="min-h-screen bg-background">

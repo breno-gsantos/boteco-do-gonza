@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from "@/lib/utils";
-import { Beef, Beer, Citrus, CupSoda, Drumstick, Glasses, Hamburger, ImageOff, Martini, Sandwich, Sparkles, UtensilsCrossed, Wine, X } from "lucide-react"
+import { Beef, Beer, ChefHat, Citrus, CupSoda, Drumstick, Glasses, GlassWater, Hamburger, ImageOff, Martini, Sandwich, Sparkles, UtensilsCrossed, Wine, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
 import Image from "next/image";
@@ -69,25 +69,13 @@ export function MenuPreview({ foodCategories, drinkCategories }: { foodCategorie
                 </div>
 
                 <div className="flex justify-center gap-4 mb-10">
-                    <button
-                        onClick={() => setMenuType("food")}
-                        className={cn(
-                            "px-6 py-3 rounded-full font-medium transition cursor-pointer",
-                            menuType === "food"
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-card border border-border text-muted-foreground"
-                        )}>
+                    <button onClick={() => setMenuType("food")} className={cn("flex items-center gap-2 px-6 py-3 rounded-full font-medium transition cursor-pointer", menuType === "food" ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground")}>
+                        <ChefHat className="size-6" />
                         Comida
                     </button>
 
-                    <button
-                        onClick={() => setMenuType("drinks")}
-                        className={cn(
-                            "px-6 py-3 rounded-full font-medium transition cursor-pointer",
-                            menuType === "drinks"
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-card border border-border text-muted-foreground"
-                        )}>
+                    <button onClick={() => setMenuType("drinks")} className={cn("flex items-center gap-2 px-6 py-3 rounded-full font-medium transition cursor-pointer", menuType === "drinks" ? "bg-primary text-primary-foreground" : "bg-card border border-border text-muted-foreground")}>
+                        <GlassWater className="size-6" />
                         Bebidas
                     </button>
                 </div>

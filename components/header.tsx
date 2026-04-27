@@ -6,12 +6,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 
 const navLinks = [
     { href: "#sobre", label: "Sobre" },
+    { href: "#galeria", label: 'Galeria' },
     { href: "#cardapio", label: "Cardápio" },
-    {href: "#galeria", label: 'Galeria'},
     { href: "#reservas", label: "Reservas" },
     { href: "#localizacao", label: "Localização" },
 ]
@@ -29,14 +29,14 @@ export function Header() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    return(
-        <header 
+    return (
+        <header
             className={cn(
                 'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
                 scrolled
-                ? 'bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-background/20'
-                : 'bg-transparent'
-        )}>
+                    ? 'bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-background/20'
+                    : 'bg-transparent'
+            )}>
             <div className="container mx-auto px-6 md:px-8">
                 <div className="flex items-center justify-between h-20 md:h-24">
                     <Link href='/' className="flex items-center gap-2 group">
@@ -55,7 +55,10 @@ export function Header() {
                         </Button>
 
                         {isSignedIn && (
-                            <UserButton />
+                            <Link href="/admin" className="relative text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 tracking-wide uppercase group">
+                                Admin
+                                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                            </Link>
                         )}
                     </nav>
 
@@ -93,11 +96,6 @@ export function Header() {
                                 </Button>
                             </div>
                         </div>
-                        {isSignedIn && (
-                            <div className="px-4 pt-4">
-                                <UserButton />
-                            </div>
-                        )}
                     </nav>
                 </div>
             </div>

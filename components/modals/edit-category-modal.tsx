@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Pencil } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
@@ -74,6 +74,7 @@ export function EditCategoryModal({ category }: Props) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Editar Categoria</DialogTitle>
+          <DialogDescription className="sr-only">Descrição Edição de Categoria</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>

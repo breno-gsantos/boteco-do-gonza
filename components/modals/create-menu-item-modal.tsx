@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import z from "zod";
 import { useForm } from "react-hook-form";
@@ -92,6 +92,7 @@ export function CreateMenuItemModal({ categories }: Props) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Novo Item</DialogTitle>
+          <DialogDescription className="sr-only">Descrição do Item</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

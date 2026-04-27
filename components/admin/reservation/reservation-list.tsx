@@ -202,12 +202,12 @@ export function ReservationList({reservations}: Props) {
                       <DropdownMenuContent align="end" className="bg-card border-border">
                         {reservation.status === 'PENDING' && (
                           <>
-                            <DropdownMenuItem className="cursor-pointer" onClick={() => handleStatusChange(reservation.id, 'CONFIRMED')} disabled={loadingId === reservation.id}>
+                            <DropdownMenuItem onClick={() => handleStatusChange(reservation.id, 'CONFIRMED')} disabled={loadingId === reservation.id}>
                               <CheckCircle2 className="size-4 text-green-500" />
                                 Confirmar
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem className="cursor-pointer text-red-500" onClick={() => handleStatusChange(reservation.id, 'CANCELLED')} disabled={loadingId === reservation.id}>
+                            <DropdownMenuItem className="text-red-500" onClick={() => handleStatusChange(reservation.id, 'CANCELLED')} disabled={loadingId === reservation.id}>
                               <XCircle className="size-4" />
                               Cancelar
                             </DropdownMenuItem>
@@ -216,12 +216,12 @@ export function ReservationList({reservations}: Props) {
 
                         {reservation.status === 'CONFIRMED' && (
                           <>
-                            <DropdownMenuItem className="cursor-pointer" onClick={() => handleStatusChange(reservation.id, 'NO_SHOW')} disabled={loadingId === reservation.id}>
+                            <DropdownMenuItem onClick={() => handleStatusChange(reservation.id, 'NO_SHOW')} disabled={loadingId === reservation.id}>
                               <UserCheck className="size-4" />
                               Marcar No-Show
                             </DropdownMenuItem>
 
-                            <DropdownMenuItem className="cursor-pointer text-red-500" onClick={() => handleStatusChange(reservation.id, 'CANCELLED')} disabled={loadingId === reservation.id}>
+                            <DropdownMenuItem className="text-red-500" onClick={() => handleStatusChange(reservation.id, 'CANCELLED')} disabled={loadingId === reservation.id}>
                               <XCircle className="size-4" />
                               Cancelar
                             </DropdownMenuItem>

@@ -15,6 +15,10 @@ const _playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playf
 export const metadata: Metadata = {
   title: "Boteco do Gonza | Bar & Gastronomia em Santos",
   description: "A esquina mais charmosa de Santos ✨. Comida irresistível, bebida gelada e resenha garantida. Reserve sua mesa agora!",
+
+  icons: {
+    icon: '/favicon.ico'
+  }
 };
 
 export default function RootLayout({

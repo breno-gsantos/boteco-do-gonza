@@ -105,16 +105,16 @@ export function MenuList({ items, categories, drinksCategories, foodCategories }
     <div className="space-y-6">
       <div className="flex gap-3">
         <Button variant={menuType === "food" ? "default" : "outline"} onClick={() => {
-            setMenuType("food")
-            setFilter("all") 
-          }}>
+          setMenuType("food")
+          setFilter("all")
+        }}>
           Comida
         </Button>
 
         <Button variant={menuType === "drinks" ? "default" : "outline"} onClick={() => {
-            setMenuType("drinks")
-            setFilter("all")
-          }}>
+          setMenuType("drinks")
+          setFilter("all")
+        }}>
           Bebidas
         </Button>
       </div>
@@ -140,9 +140,9 @@ export function MenuList({ items, categories, drinksCategories, foodCategories }
       {/* Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredItems.map((item) => (
-          <Card key={item.id} className={cn("bg-card border-border transition-all hover:border-primary/30", !item.isAvailable && "opacity-60")}>
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between gap-4">
+          <Card key={item.id} className={cn("h-full bg-card border-border transition-all hover:border-primary/30", !item.isAvailable && "opacity-60")}>
+            <CardContent className="p-5 flex flex-col h-full">
+              <div className="flex items-start justify-between gap-4 flex-1">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className={`text-xs px-2 py-0.5 rounded-full ${getCategoryColor(item.category.slug)}`}>
@@ -168,42 +168,36 @@ export function MenuList({ items, categories, drinksCategories, foodCategories }
                   </h3>
 
                   {/* DESCRIPTION */}
-                  {item.description && (
-                    <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
-                      {item.description}
+                    <p className="text-sm text-muted-foreground/70 italic line-clamp-2 mt-1 min-h-10">
+                      {item.description || "Sem descrição"}
                     </p>
-                  )}
                 </div>
 
-                 {/* MENU */}
+                {/* MENU */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <MoreHorizontal className="h-4 w-4" />
+                    <Button variant="ghost" size="icon" className="size-8">
+                      <MoreHorizontal className="size-4" />
                     </Button>
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent align="end" className="bg-card border-border">
-                    <DropdownMenuItem>
-                      <EditMenuItemModal item={item} categories={categories} />
-                    </DropdownMenuItem>
-
                     <DropdownMenuItem onClick={() => handleToggle(item.id, item.isAvailable)}>
                       {item.isAvailable ? (
                         <>
-                          <EyeOff className="h-4 w-4 mr-2" />
+                          <EyeOff className="size-4 mr-2" />
                           Desativar
                         </>
                       ) : (
                         <>
-                          <Eye className="h-4 w-4 mr-2" />
+                          <Eye className="size-4 mr-2" />
                           Ativar
                         </>
                       )}
                     </DropdownMenuItem>
 
                     <DropdownMenuItem className="text-red-500" onClick={() => handleDelete(item.id)}>
-                      <Trash2 className="h-4 w-4 mr-2" />
+                      <Trash2 className="size-4 mr-2" />
                       Excluir
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -215,7 +209,7 @@ export function MenuList({ items, categories, drinksCategories, foodCategories }
                 <span className="text-2xl font-bold text-primary">
                   R$ {(item.price / 100).toFixed(2).replace('.', ',')}
                 </span>
-                  <EditMenuItemModal item={item} categories={categories} />
+                <EditMenuItemModal item={item} categories={categories} />
               </div>
             </CardContent>
           </Card>

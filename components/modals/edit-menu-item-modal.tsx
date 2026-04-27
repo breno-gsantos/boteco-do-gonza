@@ -7,14 +7,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Pencil } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { uploadMenuImage } from "@/app/actions/menu/upload-image";
-import Image from "next/image";
 
 const schema = z.object({
   name: z.string().min(3),
@@ -90,7 +89,7 @@ export function EditMenuItemModal({categories, item}: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='outline' size='sm'>
+        <Button variant='secondary' size='sm'>
           <Pencil className="size-4" />
           Editar
         </Button>
@@ -98,6 +97,7 @@ export function EditMenuItemModal({categories, item}: Props) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Editar Item</DialogTitle>
+          <DialogDescription className="sr-only">Descrição</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

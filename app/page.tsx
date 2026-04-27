@@ -28,8 +28,8 @@ export default async function Home() {
       <Header />
       <Hero />
       <About />
-      <MenuPreview drinkCategories={drinkCategories} foodCategories={foodCategories} />
       <Gallery />
+      <MenuPreview drinkCategories={drinkCategories} foodCategories={foodCategories} />
       <Reservation />
       <Location />
       <Footer />

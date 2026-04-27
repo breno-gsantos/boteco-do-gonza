@@ -1,11 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
-import { SiFacebook, SiIfood, SiInstagram, SiWhatsapp } from "react-icons/si"
+import { SiIfood, SiInstagram, SiWhatsapp } from "react-icons/si"
 
 const navLinks = [
     { href: "#sobre", label: "Sobre" },
-    { href: "#cardapio", label: "Cardápio" },
     { href: "#galeria", label: "Galeria" },
+    { href: "#cardapio", label: "Cardápio" },
     { href: "#reservas", label: "Reservas" },
     { href: "#localizacao", label: "Localização" },
 ]

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { GalleryImage, galleryImages } from "./gallery/gallery-image"
 import { SiInstagram } from "react-icons/si"
 import Link from "next/link"
-import { Dialog, DialogContent, DialogTitle } from "./ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog"
 import { Button } from "./ui/button"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import Image from "next/image"
@@ -71,6 +71,7 @@ export function Gallery(){
       <Dialog open={selectedImage !== null} onOpenChange={() => setSelectedImage(null)}>
         <DialogContent className="max-w-5xl w-[95vw] p-0 bg-background/95 backdrop-blur-xl border-border/50 overflow-hidden" onKeyDown={handleKeyDown}>
           <DialogTitle className="sr-only">Visualização da imagem da galeria</DialogTitle>
+          <DialogDescription className="sr-only">Descrição da imagem</DialogDescription>
           {selectedImage !== null && (
             <div className="relative">
               <Button variant='ghost' size='icon' className="absolute top-4 right-4 z-10 rounded-full bg-background/50 backdrop-blur-sm hover:bg-background/80" onClick={() => setSelectedImage(null)}>
