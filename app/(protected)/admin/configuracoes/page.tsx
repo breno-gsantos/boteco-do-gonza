@@ -102,7 +102,7 @@ export default function ConfiguracoesPage(){
                         </div>
                         <div className="space-y-2">
                             <Label>Capacidade Máxima</Label>
-                            <Input type="number" defaultValue="80" className="bg-secondary border-border max-w-[120px]" />
+                            <Input type="number" defaultValue="80" className="bg-secondary border-border max-w-30" />
                         </div>
                     </CardContent>
                 </Card>

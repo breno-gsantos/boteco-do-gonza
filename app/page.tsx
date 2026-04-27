@@ -23,8 +23,6 @@ export default async function Home() {
   const foodCategories = categories.filter(c => c.type === "food");
   const drinkCategories = categories.filter(c => c.type === "drinks");
 
-  console.log(categories)
-
   return (
     <main className="min-h-screen">
       <Header />

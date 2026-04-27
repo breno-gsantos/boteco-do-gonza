@@ -6,8 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react"
 import { Button } from "../ui/button";
-import { CalendarDays, ChevronRight, LayoutDashboard, LogOut, Menu, Settings, Users, UtensilsCrossed, X } from "lucide-react";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { CalendarDays, ChevronRight, LayoutDashboard, LogOut, Menu, Users, UtensilsCrossed, X } from "lucide-react";
+import { SignOutButton, UserButton, useUser } from "@clerk/nextjs";
 
 interface SidebarProps{
     children: React.ReactNode
@@ -18,7 +18,6 @@ const navigation = [
   { name: "Reservas", href: "/admin/reservas", icon: CalendarDays },
   { name: "Cardápio", href: "/admin/cardapio", icon: UtensilsCrossed },
   { name: "Horários", href: "/admin/horarios", icon: Users },
-  { name: "Configurações", href: "/admin/configuracoes", icon: Settings },
 ]
 
 export function Sidebar({ children }: SidebarProps) {
@@ -69,7 +68,7 @@ export function Sidebar({ children }: SidebarProps) {
                             <UserButton
                                 appearance={{
                                     elements: {
-                                        avatarBox: "h-10 w-10"
+                                        avatarBox: "h-14 w-14"
                                     }
                                 }}
                             />
@@ -81,9 +80,11 @@ export function Sidebar({ children }: SidebarProps) {
                                     {user?.primaryEmailAddress?.emailAddress}
                                 </p>
                             </div>
-                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                                <LogOut className="h-4 w-4" />
-                            </Button>
+                            <SignOutButton>
+                                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                                    <LogOut className="size-4" />
+                                </Button>
+                            </SignOutButton>
                         </div>
                     </div>
                 </div>
@@ -94,7 +95,7 @@ export function Sidebar({ children }: SidebarProps) {
             <div className="lg:pl-72">
                 <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border bg-background/80 backdrop-blur-xl px-6">
                     <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
-                        <Menu className="h-5 w-5" />
+                        <Menu className="size-5" />
                     </Button>
           
                     <div className="flex-1" />
