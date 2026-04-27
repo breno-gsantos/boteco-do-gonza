@@ -20,12 +20,17 @@ export default async function Home() {
     orderBy: { order: 'asc' }
   });
 
+  const foodCategories = categories.filter(c => c.type === "food");
+  const drinkCategories = categories.filter(c => c.type === "drinks");
+
+  console.log(categories)
+
   return (
     <main className="min-h-screen">
       <Header />
       <Hero />
       <About />
-      <MenuPreview categories={categories} />
+      <MenuPreview drinkCategories={drinkCategories} foodCategories={foodCategories} />
       <Gallery />
       <Reservation />
       <Location />

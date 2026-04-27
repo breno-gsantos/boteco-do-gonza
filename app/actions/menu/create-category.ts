@@ -9,6 +9,7 @@ const schema = z.object({
   name: z.string().min(2, 'Nome da categoria é obrigatório'),
   slug: z.string().min(2).regex(/^[a-z0-9-]+$/, 'Slug deve ser lowercase com hífens'),
   order: z.number().int().default(0),
+  type: z.enum(['food', 'drinks'])
 })
 
 export async function createCategory(values: unknown) {

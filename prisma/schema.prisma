@@ -46,6 +46,8 @@ model Category{
   order            Int @default(0)
   isActive         Boolean @default(true)
 
+  type             String @default("food")
+
   items            MenuItem[]
 
   createdAt   DateTime @default(now())

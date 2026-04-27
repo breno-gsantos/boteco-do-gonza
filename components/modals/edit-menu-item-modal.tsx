@@ -41,7 +41,7 @@ export function EditMenuItemModal({categories, item}: Props) {
       name: item.name,
       description: item.description ?? '',
       price: item.price / 100,
-      categoryId: item.categoryId
+      categoryId: item.categoryId,
     }
   })
 

@@ -1,22 +1,7 @@
 import { MenuList } from "@/components/admin/menu/menu-list"
 import { CreateCategoryModal } from "@/components/modals/create-category-modal"
 import { CreateMenuItemModal } from "@/components/modals/create-menu-item-modal"
-import { Button } from "@/components/ui/button"
 import prisma from "@/lib/db"
-import { Plus } from "lucide-react"
-
-type Category = "drinks" | "porcoes" | "pratos"
-
-interface MenuItem {
-  id: number
-  name: string
-  description: string
-  price: number
-  category: Category
-  active: boolean
-  featured?: boolean
-}
-
 
 export default async function CardapioPage(){
     const items = await prisma.menuItem.findMany({
@@ -34,6 +19,9 @@ export default async function CardapioPage(){
         }
     });
 
+    const foodCategories = categories.filter(c => c.type === "food")
+    const drinkCategories = categories.filter(c => c.type === "drinks")
+
     return (
         <div className="space-y-8">
             {/* Page header */}
@@ -48,7 +36,7 @@ export default async function CardapioPage(){
                 </div>
             </div>
 
-            <MenuList items={items} categories={categories} />
+            <MenuList items={items} categories={categories} drinksCategories={drinkCategories} foodCategories={foodCategories} />
         </div>
     )
 }

@@ -11,6 +11,7 @@ import { UserButton, useUser } from "@clerk/nextjs";
 const navLinks = [
     { href: "#sobre", label: "Sobre" },
     { href: "#cardapio", label: "Cardápio" },
+    {href: "#galeria", label: 'Galeria'},
     { href: "#reservas", label: "Reservas" },
     { href: "#localizacao", label: "Localização" },
 ]
@@ -39,7 +40,7 @@ export function Header() {
             <div className="container mx-auto px-6 md:px-8">
                 <div className="flex items-center justify-between h-20 md:h-24">
                     <Link href='/' className="flex items-center gap-2 group">
-                        <Image src='/bdg.png' alt="Boteco do Gonza" width={160} height={60} className="h-15 md:h-30 w-auto transition-transform duration-300 group-hover:scale-105" />
+                        <Image src='/bdg.png' alt="Boteco do Gonza" width={160} height={60} className="h-15 md:h-30 w-auto transition-transform duration-300 group-hover:scale-105" priority />
                     </Link>
 
                     <nav className="hidden md:flex items-center gap-10">

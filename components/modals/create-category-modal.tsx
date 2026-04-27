@@ -11,9 +11,11 @@ import { Button } from "../ui/button"
 import { Plus } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 const schema = z.object({
   name: z.string().min(2, "Nome obrigatório"),
+  type: z.enum(['food', 'drinks'])
 })
 
 type FormData = z.infer<typeof schema>
@@ -32,7 +34,8 @@ export function CreateCategoryModal() {
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: ''
+      name: '',
+      type: "food"
     }
   })
 
@@ -76,6 +79,24 @@ export function CreateCategoryModal() {
                 <FormMessage />
               </FormItem>
             )} />
+
+            <FormField control={control} name="type" render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tipo</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="food">Comida</SelectItem>
+                      <SelectItem value="drinks">Bebidas</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
 
             <Button className="w-full">
               Criar

@@ -1,44 +1,50 @@
 'use client'
 
 import { cn } from "@/lib/utils";
-import { Beef, Drumstick, Hamburger, ImageOff, Sandwich, Sparkles, UtensilsCrossed, Wine, X } from "lucide-react"
+import { Beef, Beer, Citrus, CupSoda, Drumstick, Glasses, Hamburger, ImageOff, Martini, Sandwich, Sparkles, UtensilsCrossed, Wine, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
-import { MenuItem } from "@/lib/generated/prisma/client";
-import { Button } from "./ui/button";
+import { Category, MenuItem } from "@/lib/generated/prisma/client";
 
-interface ItemProps {
-    id: string;
-    name: string;
-    description: string | null;
-    price: number;
-    isFeatured: boolean;
-    imageUrl?: string;
-}
-
-interface CategoryProps {
-    id: string;
-    name: string;
-    slug: string;
-    items: ItemProps[]
+type CategoryWithItems = Category & {
+    items: MenuItem[]
 }
 
 const iconMap = {
-  entradas: UtensilsCrossed,
-  porcoes: Drumstick,
-  pasteis: Sandwich,
-  "tabuas-e-grelhados": Beef,
-  lanches: Hamburger,
+    entradas: UtensilsCrossed,
+    porcoes: Drumstick,
+    pasteis: Sandwich,
+    "tabuas-e-grelhados": Beef,
+    lanches: Hamburger,
+  
+    "drinks-classicos": Martini,
+    "drinks-da-casa": Sparkles,
+    cervejas: Beer,
+    softs: CupSoda,                    
+    combos: Glasses,                   
+    garrafas: Wine,                    
+    gt: Martini,                       
+    caipirinha: Citrus,
 }
 
-export function MenuPreview({categories}: {categories: CategoryProps[]}){
-    const [activeCategory, setActiveCategory] = useState<string>(categories[0]?.id);
+export function MenuPreview({ foodCategories, drinkCategories }: { foodCategories: CategoryWithItems[], drinkCategories: CategoryWithItems[] }) {
+    const [menuType, setMenuType] = useState<"food" | "drinks">("food")
 
-    const [selectedItem, setSelectedItem] = useState<ItemProps | null>(null)
+    const currentCategories = menuType === "food" ? foodCategories : drinkCategories
+
+    const [activeCategory, setActiveCategory] = useState<string>(
+        currentCategories[0]?.id
+    );
+
+    const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
     
-    const currentCategory = categories.find((cat) => cat.id === activeCategory);
+    const currentCategory = currentCategories.find((cat) => cat.id === activeCategory);
+
+    useEffect(() => {
+        setActiveCategory(currentCategories[0]?.id)
+    }, [menuType])
 
     useEffect(() => {
         const el = document.getElementById("menu-items")
@@ -62,12 +68,36 @@ export function MenuPreview({categories}: {categories: CategoryProps[]}){
                     </p>
                 </div>
 
-                {/* Category Tabs */}
+                <div className="flex justify-center gap-4 mb-10">
+                    <button
+                        onClick={() => setMenuType("food")}
+                        className={cn(
+                            "px-6 py-3 rounded-full font-medium transition cursor-pointer",
+                            menuType === "food"
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-card border border-border text-muted-foreground"
+                        )}>
+                        Comida
+                    </button>
 
+                    <button
+                        onClick={() => setMenuType("drinks")}
+                        className={cn(
+                            "px-6 py-3 rounded-full font-medium transition cursor-pointer",
+                            menuType === "drinks"
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-card border border-border text-muted-foreground"
+                        )}>
+                        Bebidas
+                    </button>
+                </div>
+
+                {/* Category Tabs */}
                 <div className="flex justify-center gap-3 md:gap-4 mb-16">
                     <Carousel opts={{ align: 'start' }}>
                         <CarouselContent className="-ml-2">
-                            {categories.map((category) => {
+
+                            {currentCategories.map((category) => {
                                 const Icon = iconMap[category.slug.toLowerCase() as keyof typeof iconMap] || Wine
                             
                                 return (
@@ -95,7 +125,7 @@ export function MenuPreview({categories}: {categories: CategoryProps[]}){
                     </Carousel>
                 </div>
 
-                {/* Menu items */}
+                 {/* Menu items */}
                 <div id="menu-items" className="max-w-3xl mx-auto h-200 overflow-y-auto p-4">
                     <div className="grid gap-4">
                         {currentCategory?.items.map((item, index) => (
@@ -103,7 +133,9 @@ export function MenuPreview({categories}: {categories: CategoryProps[]}){
                                 "group relative bg-card p-6 md:p-8 rounded-2xl border transition-all duration-300 ease-out hover:scale-[1.015] hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] active:scale-[0.99]",
                                 item.isFeatured
                                     ? "border-primary/30 bg-linear-to-r from-card to-primary/5"
-                                    : "border-border/50 hover:border-primary/20")} style={{ animationDelay: `${index * 100}ms` }} onClick={() => setSelectedItem(item)}>
+                                    : "border-border/50 hover:border-primary/20")} 
+                                style={{ animationDelay: `${index * 100}ms` }} 
+                                onClick={() => setSelectedItem(item)}>
 
                                 {item.isFeatured && (
                                     <div className="absolute -top-3 left-6 flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-medium">
@@ -113,12 +145,10 @@ export function MenuPreview({categories}: {categories: CategoryProps[]}){
                                 )}
                                 
                                 <div className="flex items-center justify-center gap-5">
-                                    {/* Image container */}
                                     <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden shrink-0">
                                         {item.imageUrl ? (
                                             <>
                                                 <Image src={item.imageUrl} alt={item.name} fill sizes="(max-width: 768px) 120px, 160px" className="object-cover" />
-                                                {/* Hover overlay */}
                                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                             </>
                                         ) : (
@@ -128,12 +158,12 @@ export function MenuPreview({categories}: {categories: CategoryProps[]}){
                                         )}
                                     </div>
 
-                                    <div className="flex justify-between items-center gap-6">
+                                    <div className="w-full flex justify-between items-center gap-6">
                                         <div className="flex-1">
                                             <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                                                 {item.name}
                                             </h3>
-                                            <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                                            <p className="hidden md:block text-muted-foreground leading-relaxed">{item.description}</p>
                                         </div>
                                         <div className="text-right shrink-0">
                                             <span className="text-2xl md:text-3xl font-serif font-bold text-primary whitespace-nowrap">
@@ -158,15 +188,13 @@ export function MenuPreview({categories}: {categories: CategoryProps[]}){
                 open={selectedItem !== null}
                 onOpenChange={(open) => {
                     if (!open) setSelectedItem(null)
-                }}
-            >
+                }}>
                 <DialogContent className="max-w-2xl w-[95vw] p-0 overflow-hidden bg-card border-border/50 rounded-2xl">
                     <DialogTitle className="sr-only">{selectedItem?.name || "Detalhes do item"}</DialogTitle>
                     <DialogDescription className="sr-only">{selectedItem?.description || "Descrição do item"}</DialogDescription>
                     {selectedItem && (
                         <div className="flex flex-col">
 
-                            {/* IMAGE (menor e mais elegante) */}
                             <div className="relative w-full aspect-video bg-muted overflow-hidden">
 
                                 {selectedItem.imageUrl ? (
@@ -218,7 +246,6 @@ export function MenuPreview({categories}: {categories: CategoryProps[]}){
                             </div>
                         </div>
                     )}
-
                 </DialogContent>
             </Dialog>
         </section>

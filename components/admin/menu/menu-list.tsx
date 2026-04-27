@@ -18,6 +18,8 @@ type FilterType = 'all' | string
 interface Props{
   items: (MenuItem & { category: Category })[]
   categories: Category[]
+  foodCategories: Category[]
+  drinksCategories: Category[]
 }
 
 function getCategoryColor(slug: string) {
@@ -61,17 +63,26 @@ function getCategoryColor(slug: string) {
   }
 }
 
-export function MenuList({ items, categories }: Props) {
+export function MenuList({ items, categories, drinksCategories, foodCategories }: Props) {
+  const [menuType, setMenuType] = useState<"food" | "drinks">("food")
   const [filter, setFilter] = useState<FilterType>("all")
   const [search, setSearch] = useState<string>("")
 
+  const currentCategories = menuType === 'food' ? foodCategories : drinksCategories
+
+  const totalByType = items.filter(item => item.category.type === menuType).length
+
   const filteredItems = items.filter((item) => {
-    const matchesFilter = filter === "all" || item.category.slug === filter
+    const matchesType = item.category.type === menuType
+
+    const matchesFilter =
+      filter === "all" || item.category.slug === filter
+
     const matchesSearch =
       item.name.toLowerCase().includes(search.toLowerCase()) ||
       item.description?.toLowerCase().includes(search.toLowerCase())
 
-    return matchesFilter && matchesSearch
+    return matchesType && matchesFilter && matchesSearch
   })
 
   async function handleToggle(id: string, current: boolean) {
@@ -92,12 +103,28 @@ export function MenuList({ items, categories }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-2">
-        <Button variant={filter === 'all' ? 'default' : 'outline'} size='sm' onClick={() => setFilter('all')}>
-          Todos ({items.length})
+      <div className="flex gap-3">
+        <Button variant={menuType === "food" ? "default" : "outline"} onClick={() => {
+            setMenuType("food")
+            setFilter("all") 
+          }}>
+          Comida
         </Button>
 
-        {categories.map((cat) => (
+        <Button variant={menuType === "drinks" ? "default" : "outline"} onClick={() => {
+            setMenuType("drinks")
+            setFilter("all")
+          }}>
+          Bebidas
+        </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        <Button variant={filter === 'all' ? 'default' : 'outline'} size='sm' onClick={() => setFilter('all')}>
+          Todos ({totalByType})
+        </Button>
+
+        {currentCategories.map((cat) => (
           <Button key={cat.id} variant={filter === cat.slug ? 'default' : 'outline'} size='sm' onClick={() => setFilter(cat.slug)}>
             {cat.name}
           </Button>

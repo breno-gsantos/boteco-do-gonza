@@ -3,10 +3,11 @@ import Link from "next/link"
 import { SiFacebook, SiIfood, SiInstagram, SiWhatsapp } from "react-icons/si"
 
 const navLinks = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#cardapio", label: "Cardápio" },
-  { href: "#reservas", label: "Reservas" },
-  { href: "#localizacao", label: "Localização" },
+    { href: "#sobre", label: "Sobre" },
+    { href: "#cardapio", label: "Cardápio" },
+    { href: "#galeria", label: "Galeria" },
+    { href: "#reservas", label: "Reservas" },
+    { href: "#localizacao", label: "Localização" },
 ]
 
 const socialLinks = [
@@ -16,7 +17,7 @@ const socialLinks = [
 ]
 
 export function Footer(){
-    return(
+    return (
         <footer className="bg-card relative overflow-hidden ">
             <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
@@ -57,15 +58,15 @@ export function Footer(){
                     </div>
                 </div>
                 <div className="border-t border-border/50 py-8">
-                            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-                                <p className="text-muted-foreground/60 text-sm">
-                                    © {new Date().getFullYear()} Boteco do Gonza. Todos os direitos reservados.
-                                </p>
-                                <p className="text-muted-foreground/40 text-xs tracking-wide uppercase">
-                                    Beba com moderação
-                                </p>
-                            </div>
-                        </div>
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+                        <p className="text-muted-foreground/60 text-sm">
+                            © {new Date().getFullYear()} Boteco do Gonza. Todos os direitos reservados.
+                        </p>
+                        <p className="text-muted-foreground/40 text-xs tracking-wide uppercase">
+                            Beba com moderação
+                        </p>
+                    </div>
+                </div>
             </div>
         </footer>
     )
